@@ -11,7 +11,7 @@ const { citys, icons, htmls } = require('./pogod');
 const start = () => {
   bot.setMyCommands(commads);
 
-  //===================================>
+  //===============FunctionPogoda====================>
 
   const getCity = (chatId, city) => {
     axios.get(citys(city)).then(
@@ -33,6 +33,8 @@ const start = () => {
     );
   };
 
+  //===============City=========================>
+
   bot.onText(/\/city/, (msg, match) => {
     const chatId = msg.chat.id;
     const city = match.input.split(' ')[1];
@@ -43,7 +45,7 @@ const start = () => {
     getCity(chatId, city);
   });
 
-  //===================================>
+  //================Start===================>
 
   bot.on('message', async (msg) => {
     const sms = `<b>Xush kelibsiz,  ${cons.names(msg)} 😉</b>\n
@@ -58,10 +60,12 @@ const start = () => {
     }
   });
 
+  //===============Callback 1==============>
+
   bot.on('callback_query', async (msg) => {
     if (msg.data === 'manzil') {
       await bot.sendMessage(
-        cons.chatId(msg),
+        cons.mess(msg),
         `<b>Agar bu yerda sizning shahringiz yo'q bo'lsa unda /city komandasidan kiyin shahringinzning nomini kiriting!</b>`,
         {
           reply_markup: {
@@ -73,73 +77,51 @@ const start = () => {
     }
   });
 
+  //==============Callback 2===============>
+
   bot.on('callback_query', (msg) => {
     if (msg.data === 'toshkent') {
-      getCity(cons.chatId(msg), 'toshkent');
+      getCity(cons.mess(msg), 'toshkent');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'jizzax') {
-      getCity(cons.chatId(msg), 'jizzax');
+      getCity(cons.mess(msg), 'jizzax');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'guliston') {
-      getCity(cons.chatId(msg), 'guliston');
+      getCity(cons.mess(msg), 'guliston');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'andijon') {
-      getCity(cons.chatId(msg), 'andijon');
+      getCity(cons.mess(msg), 'andijon');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'namangan') {
-      getCity(cons.chatId(msg), 'namangan');
+      getCity(cons.mess(msg), 'namangan');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'fargona') {
-      getCity(cons.chatId(msg), 'fargona');
+      getCity(cons.mess(msg), 'fargona');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'samarqand') {
-      getCity(cons.chatId(msg), 'samarqand');
+      getCity(cons.mess(msg), 'samarqand');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'qarshi') {
-      getCity(cons.chatId(msg), 'qarshi');
+      getCity(cons.mess(msg), 'qarshi');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'termiz') {
-      getCity(cons.chatId(msg), 'termiz');
+      getCity(cons.mess(msg), 'termiz');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'buxoro') {
-      getCity(cons.chatId(msg), 'buxoro');
+      getCity(cons.mess(msg), 'buxoro');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'navoiy') {
-      getCity(cons.chatId(msg), 'navoiy');
+      getCity(cons.mess(msg), 'navoiy');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'urganch') {
-      getCity(cons.chatId(msg), 'urganch');
+      getCity(cons.mess(msg), 'urganch');
     }
-  });
-  bot.on('callback_query', (msg) => {
     if (msg.data === 'nukus') {
-      getCity(cons.chatId(msg), 'nukus');
+      getCity(cons.mess(msg), 'nukus');
     }
   });
 
-  //====================================>
+  //===================Love=================>
 
   bot.on('message', async (msg) => {
     if (cons.text(msg) === '/love') {
@@ -172,7 +154,7 @@ const start = () => {
     }
   });
 
-  //=======================================>
+  //==================Text=====================>
 
   bot.on('text', async (msg) => {
     if (cons.text(msg) === 'qalesan') {
@@ -214,6 +196,8 @@ const start = () => {
     }
   });
 
+  //=================Commands===============>
+
   bot.on('message', async (msg) => {
     if (cons.text(msg) === '/info') {
       await bot.sendMessage(
@@ -224,8 +208,6 @@ const start = () => {
         }
       );
     }
-  });
-  bot.on('message', async (msg) => {
     if (cons.text(msg) === '/reklama') {
       await bot.sendMessage(
         cons.chatId(msg),
@@ -236,6 +218,7 @@ const start = () => {
       );
     }
   });
+
   console.log('Bot ishamoqda');
 };
 
