@@ -35,11 +35,14 @@ const start = () => {
 
   //===============City=========================>
 
-  bot.onText(/\/city/, (msg, match) => {
+  bot.onText(/\/city/, async (msg, match) => {
     const chatId = msg.chat.id;
     const city = match.input.split(' ')[1];
     if (city === undefined) {
-      bot.sendMessage(chatId, `Bunaqa shahar yo'q qaytadan urinib ko'ring!`);
+      await bot.sendMessage(
+        chatId,
+        `Bunaqa shahar yo'q qaytadan urinib ko'ring!`
+      );
       return;
     }
     getCity(chatId, city);
@@ -47,17 +50,15 @@ const start = () => {
 
   //================Start===================>
 
-  bot.on('message', async (msg) => {
+  bot.onText(/\/start/, async (msg) => {
     const sms = `<b>Xush kelibsiz,  ${cons.names(msg)} 😉</b>\n
     <b> Siz botimizdan o'zingiznig shahringizdagi ob-havo malumotini to'liq olishingiz mumkin.Bunig uchun kerakli tugmani bosing!</b>`;
-    if (cons.text(msg) === '/start') {
-      await bot.sendMessage(cons.chatId(msg), sms, {
-        reply_markup: {
-          inline_keyboard: inbtn,
-        },
-        parse_mode: 'HTML',
-      });
-    }
+    await bot.sendMessage(cons.chatId(msg), sms, {
+      reply_markup: {
+        inline_keyboard: inbtn,
+      },
+      parse_mode: 'HTML',
+    });
   });
 
   //===============Callback 1==============>
@@ -123,16 +124,15 @@ const start = () => {
 
   //===================Love=================>
 
-  bot.on('message', async (msg) => {
-    if (cons.text(msg) === '/love') {
-      await bot.sendMessage(cons.chatId(msg), 'Sizga botimiz yoqdimi', {
-        reply_markup: {
-          one_time_keyboard: true,
-          resize_keyboard: true,
-          keyboard: [['XA', 'YUQ'], ['Javob bermaslik']],
-        },
-      });
-    }
+  bot.onText(/\/love/, async (msg) => {
+    await bot.sendMessage(cons.chatId(msg), 'Sizga botimiz yoqdimi', {
+      reply_markup: {
+        force_reply: false,
+        one_time_keyboard: true,
+        resize_keyboard: true,
+        keyboard: [['XA', 'YUQ'], ['Javob bermaslik']],
+      },
+    });
     if (cons.text(msg) === 'YUQ') {
       await bot.sendSticker(
         cons.chatId(msg),
@@ -157,13 +157,13 @@ const start = () => {
   //==================Text=====================>
 
   bot.on('text', async (msg) => {
-    if (cons.text(msg) === 'qalesan') {
+    if (cons.text(msg).includes('qalesan')) {
       bot.sendMessage(
         cons.chatId(msg),
         "Men yaxshi, O'zingiz qalesiz " + cons.names(msg)
       );
     }
-    if (cons.text(msg) === 'salom') {
+    if (cons.text(msg).includes('salom')) {
       bot.sendMessage(cons.chatId(msg), 'Assalomu alaykum ' + cons.names(msg));
     }
     if (cons.text(msg) === 'ishlar zormi') {
@@ -172,20 +172,20 @@ const start = () => {
         "Menda zor, O'zingizniki zo'rmi " + cons.names(msg)
       );
     }
-    if (cons.text(msg) === 'nima gaplar') {
+    if (cons.text(msg).includes('nima gaplar')) {
       bot.sendMessage(cons.chatId(msg), 'Bida tinchlik ' + cons.names(msg));
     }
-    if (cons.text(msg) === 'isming nima') {
+    if (cons.text(msg).includes('isming nima')) {
       bot.sendMessage(
         cons.chatId(msg),
         'Meniki Bot, sizniki ' + cons.names(msg) + 'mi'
       );
     }
-    if (cons.text(msg) === 'bugungi obhavo') {
+    if (cons.text(msg).includes('bugungi obhavo')) {
       bot.sendMessage(
         cons.chatId(msg),
-        'Bugungi ob-havoni bilish uchun shahringizni nomini yozing! ' +
-          cons.names(msg)
+        `Bugungi ob-havoni bilish uchun /city so'zidan kiyin shahringizni nomini yozing! 
+          ${cons.names(msg)}`
       );
     }
     if (cons.text(msg) === '') {
@@ -198,25 +198,37 @@ const start = () => {
 
   //=================Commands===============>
 
+  bot.onText(/\/info/, async (msg) => {
+    await bot.sendMessage(
+      cons.chatId(msg),
+      '<b> Bizning botimizda siz ozingizga kerakli ob-havo malumotlarini olishingiz mumkin! undan tashqari botimiz bilan suxbat qilishingiz mumkin!</b>',
+      {
+        parse_mode: 'HTML',
+      }
+    );
+  });
+  bot.onText(/\/reklama/, async (msg) => {
+    await bot.sendMessage(
+      cons.chatId(msg),
+      `<b> Siz ozingizning biznesingizni, guruhingizni, kanalingizni rivojlantirish uchun reklama berishingiz mumkin!!!</b>`,
+      {
+        parse_mode: 'HTML',
+      }
+    );
+  });
+
+  //====================Delete==============>
   bot.on('message', async (msg) => {
-    if (cons.text(msg) === '/info') {
-      await bot.sendMessage(
-        cons.chatId(msg),
-        '<b> Bizning botimizda siz ozingizga kerakli ob-havo malumotlarini olishingiz mumkin! undan tashqari botimiz bilan suxbat qilishingiz mumkin!</b>',
-        {
-          parse_mode: 'HTML',
-        }
-      );
-    }
-    if (cons.text(msg) === '/reklama') {
-      await bot.sendMessage(
-        cons.chatId(msg),
-        `<b> Siz ozingizning biznesingizni, guruhingizni, kanalingizni rivojlantirish uchun reklama berishingiz mumkin!!!</b>`,
-        {
-          parse_mode: 'HTML',
-        }
-      );
-    }
+    arr = ['dalbayop', 'onangni', 'sikay', 'kut'];
+    arr.forEach((item) => {
+      if (cons.text(msg).includes(item)) {
+        bot.deleteMessage(cons.chatId(msg), msg.message_id);
+        bot.sendMessage(
+          cons.chatId(msg),
+          `Bunaqa yomon gaplarni yozmang! ${cons.names(msg)}`
+        );
+      }
+    });
   });
 
   console.log('Bot ishamoqda');
