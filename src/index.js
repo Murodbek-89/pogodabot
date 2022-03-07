@@ -157,31 +157,37 @@ const start = () => {
   //==================Text=====================>
 
   bot.on('text', async (msg) => {
-    if (cons.text(msg).includes('qalesan')) {
+    if (cons.text(msg).toLowerCase().includes('qalesan')) {
       bot.sendMessage(
         cons.chatId(msg),
         "Men yaxshi, O'zingiz qalesiz " + cons.names(msg)
       );
     }
-    if (cons.text(msg).includes('salom')) {
+    if (cons.text(msg).toLowerCase().includes('salom')) {
       bot.sendMessage(cons.chatId(msg), 'Assalomu alaykum ' + cons.names(msg));
     }
-    if (cons.text(msg) === 'ishlar zormi') {
+    if (cons.text(msg).toLowerCase().includes('mazzang zormi')) {
       bot.sendMessage(
         cons.chatId(msg),
-        "Menda zor, O'zingizniki zo'rmi " + cons.names(msg)
+        "Menda zo'r, O'zingizniki zo'rmi " + cons.names(msg)
       );
     }
-    if (cons.text(msg).includes('nima gaplar')) {
+    if (cons.text(msg).toLowerCase().includes('nima gaplar')) {
       bot.sendMessage(cons.chatId(msg), 'Bida tinchlik ' + cons.names(msg));
     }
-    if (cons.text(msg).includes('isming nima')) {
+    if (cons.text(msg).toLowerCase().includes('isming nima')) {
       bot.sendMessage(
         cons.chatId(msg),
         'Meniki Bot, sizniki ' + cons.names(msg) + 'mi'
       );
     }
-    if (cons.text(msg).includes('bugungi obhavo')) {
+    if (cons.text(msg).toLowerCase().includes('ishlar qalay')) {
+      bot.sendMessage(
+        cons.chatId(msg),
+        "Bizniki yaxshi o'zinggizniki yaxshimi " + cons.names(msg)
+      );
+    }
+    if (cons.text(msg).toLowerCase().includes('bugungi obhavo')) {
       bot.sendMessage(
         cons.chatId(msg),
         `Bugungi ob-havoni bilish uchun /city so'zidan kiyin shahringizni nomini yozing! 
@@ -219,7 +225,7 @@ const start = () => {
 
   //====================Delete==============>
   bot.on('message', async (msg) => {
-    arr = ['dalbayop', 'onangni', 'sikay', 'kut'];
+    arr = ['dalbayop', 'sikay', 'kut', 'axmoq', 'qutoq', 'pidaraz'];
     arr.forEach((item) => {
       if (cons.text(msg).includes(item)) {
         bot.deleteMessage(cons.chatId(msg), msg.message_id);

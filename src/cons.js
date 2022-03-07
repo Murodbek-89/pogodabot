@@ -3,7 +3,7 @@ const cons = {
     return msg.chat.id;
   },
   text(msg) {
-    return msg.text.toLowerCase();
+    return msg.text;
   },
   names(msg) {
     return msg.from.first_name;
