@@ -227,7 +227,7 @@ const start = () => {
   bot.on('message', async (msg) => {
     arr = ['dalbayop', 'sikay', 'kut', 'axmoq', 'qutoq', 'pidaraz'];
     arr.forEach((item) => {
-      if (cons.text(msg).includes(item)) {
+      if (cons.text(msg).toLowerCase().includes(item)) {
         bot.deleteMessage(cons.chatId(msg), msg.message_id);
         bot.sendMessage(
           cons.chatId(msg),
