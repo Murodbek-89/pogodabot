@@ -166,6 +166,9 @@ const start = () => {
     if (cons.text(msg).toLowerCase().includes('salom')) {
       bot.sendMessage(cons.chatId(msg), 'Assalomu alaykum ' + cons.names(msg));
     }
+    if (cons.text(msg).toLowerCase().includes('zormi')) {
+      bot.sendMessage(cons.chatId(msg), 'Men zor ' + cons.names(msg));
+    }
     if (cons.text(msg).toLowerCase().includes('mazzang zormi')) {
       bot.sendMessage(
         cons.chatId(msg),
@@ -194,12 +197,6 @@ const start = () => {
           ${cons.names(msg)}`
       );
     }
-    if (cons.text(msg) === '') {
-      bot.sendMessage(
-        cons.chatId(msg),
-        'Men sizni tushunmayapman ' + cons.names(msg)
-      );
-    }
   });
 
   //=================Commands===============>
@@ -225,7 +222,21 @@ const start = () => {
 
   //====================Delete==============>
   bot.on('message', async (msg) => {
-    arr = ['dalbayop', 'sikay', 'kut', 'axmoq', 'qutoq', 'pidaraz'];
+    arr = [
+      'dalbayop',
+      'sikay',
+      'kut',
+      'axmoq',
+      'qutoq',
+      'pidaraz',
+      'onagar',
+      'billat',
+      'jallap',
+      'jalap',
+      'bilat',
+      'yiban',
+      'kazyol',
+    ];
     arr.forEach((item) => {
       if (cons.text(msg).toLowerCase().includes(item)) {
         bot.deleteMessage(cons.chatId(msg), msg.message_id);
@@ -235,6 +246,53 @@ const start = () => {
         );
       }
     });
+  });
+
+  //===================Photo=============>
+
+  bot.on('photo', async (msg) => {
+    bot.sendSticker(
+      cons.chatId(msg),
+      'https://tlgrm.ru/_/stickers/dc7/a36/dc7a3659-1457-4506-9294-0d28f529bb0a/13.webp'
+    );
+  });
+
+  //================Chatphoto==============>
+
+  bot.onText(/\/photo/, async (msg) => {
+    const photos = fs.readFileSync(__dirname + '/016.jpg');
+    bot.setChatPhoto(cons.chatId(msg), photos);
+  });
+  bot.on('new_chat_photo', async (msg) => {
+    bot.sendPhoto(
+      cons.chatId(msg),
+      'https://avatars.mds.yandex.net/get-images-cbir/995469/vdEBfxg7E-fDlvISmJO4LQ9455/ocr'
+    );
+  });
+
+  //=================Title=================>
+
+  bot.onText(/\/title/, async (msg, match) => {
+    const tit = match.input.split(' ')[1];
+    bot.setChatTitle(cons.chatId(msg), tit);
+  });
+
+  //===================NewMember===========>
+
+  bot.on('new_chat_members', async (msg) => {
+    await bot.sendSticker(
+      cons.chatId(msg),
+      'https://tlgrm.ru/_/stickers/571/84c/57184c6d-e8db-4b34-9c67-619969536175/1.webp'
+    );
+  });
+
+  //===================LeftMember===========>
+
+  bot.on('left_chat_member', async (msg) => {
+    bot.sendSticker(
+      cons.chatId(msg),
+      'https://tlgrm.ru/_/stickers/571/84c/57184c6d-e8db-4b34-9c67-619969536175/192/32.webp'
+    );
   });
 
   console.log('Bot ishamoqda');
