@@ -23,12 +23,11 @@ module.exports = {
     ],
     [{ text: "Qoraqolpog'iston", callback_data: 'nukus' }],
   ],
-  btn: {
-    reply_markup: {
-      one_time_keyboard: true,
-      resize_keyboard: true,
-      selective: true,
-      keyboard: [['BUGUNGI', 'ERTANGI']],
-    },
-  },
+  btn: [
+    [
+      { text: 'XA', callback_data: 'xa' },
+      { text: 'YUQ', callback_data: 'yuq' },
+    ],
+    [{ text: 'JAVOB BERMASLIK', callback_data: 'javob yuq' }],
+  ],
 };

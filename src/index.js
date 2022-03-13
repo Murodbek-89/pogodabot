@@ -127,30 +127,29 @@ const start = () => {
   bot.onText(/\/love/, async (msg) => {
     await bot.sendMessage(cons.chatId(msg), 'Sizga botimiz yoqdimi', {
       reply_markup: {
-        force_reply: false,
-        one_time_keyboard: true,
-        resize_keyboard: true,
-        keyboard: [['XA', 'YUQ'], ['Javob bermaslik']],
+        inline_keyboard: btn,
       },
     });
-    if (cons.text(msg) === 'YUQ') {
+  });
+  bot.on('callback_query', async (msg) => {
+    console.log(msg);
+    if (msg.data === 'xa') {
       await bot.sendSticker(
-        cons.chatId(msg),
-        'https://tlgrm.ru/_/stickers/ed3/a3f/ed3a3fa9-9c12-47eb-909a-e5de9a87df3f/12.webp'
-      );
-    }
-    if (cons.text(msg) === 'XA') {
-      await bot.sendSticker(
-        cons.chatId(msg),
+        cons.mess(msg),
         'https://tlgrm.ru/_/stickers/ed3/a3f/ed3a3fa9-9c12-47eb-909a-e5de9a87df3f/10.webp'
       );
     }
-    if (cons.text(msg) === 'Javob bermaslik') {
-      await bot.sendMessage(cons.chatId(msg), 'Javob yuq', {
-        reply_markup: {
-          remove_keyboard: true,
-        },
-      });
+    if (msg.data === 'yuq') {
+      await bot.sendSticker(
+        cons.mess(msg),
+        'https://tlgrm.ru/_/stickers/ed3/a3f/ed3a3fa9-9c12-47eb-909a-e5de9a87df3f/12.webp'
+      );
+    }
+    if (msg.data === 'javob yuq') {
+      await bot.sendSticker(
+        cons.mess(msg),
+        'https://tlgrm.ru/_/stickers/571/84c/57184c6d-e8db-4b34-9c67-619969536175/192/22.webp'
+      );
     }
   });
 
@@ -218,63 +217,6 @@ const start = () => {
         parse_mode: 'HTML',
       }
     );
-  });
-
-  //====================Delete==============>
-  bot.on('message', async (msg) => {
-    arr = [
-      'dalbayop',
-      'sikay',
-      'kut',
-      'axmoq',
-      'qutoq',
-      'pidaraz',
-      'onagar',
-      'billat',
-      'jallap',
-      'jalap',
-      'bilat',
-      'yiban',
-      'kazyol',
-    ];
-    arr.forEach((item) => {
-      if (cons.text(msg).toLowerCase().includes(item)) {
-        bot.deleteMessage(cons.chatId(msg), msg.message_id);
-        bot.sendMessage(
-          cons.chatId(msg),
-          `Bunaqa yomon gaplarni yozmang! ${cons.names(msg)}`
-        );
-      }
-    });
-  });
-
-  //===================Photo=============>
-
-  bot.on('photo', async (msg) => {
-    bot.sendSticker(
-      cons.chatId(msg),
-      'https://tlgrm.ru/_/stickers/dc7/a36/dc7a3659-1457-4506-9294-0d28f529bb0a/13.webp'
-    );
-  });
-
-  //================Chatphoto==============>
-
-  bot.onText(/\/photo/, async (msg) => {
-    const photos = fs.readFileSync(__dirname + '/016.jpg');
-    bot.setChatPhoto(cons.chatId(msg), photos);
-  });
-  bot.on('new_chat_photo', async (msg) => {
-    bot.sendPhoto(
-      cons.chatId(msg),
-      'https://avatars.mds.yandex.net/get-images-cbir/995469/vdEBfxg7E-fDlvISmJO4LQ9455/ocr'
-    );
-  });
-
-  //=================Title=================>
-
-  bot.onText(/\/title/, async (msg, match) => {
-    const tit = match.input.split(' ')[1];
-    bot.setChatTitle(cons.chatId(msg), tit);
   });
 
   //===================NewMember===========>

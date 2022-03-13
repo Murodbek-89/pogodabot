@@ -1,7 +1,6 @@
 const commands = [
   { command: '/start', description: 'Botimizga kirish' },
   { command: '/info', description: 'Botimiz haqida malumotlar' },
-  { command: '/photo', description: 'Rasmlar' },
   { command: '/love', description: 'Tanlov' },
   { command: '/kanal', description: 'Kanalimizga taklif' },
   { command: '/grup', description: 'Guximizga taklif' },
