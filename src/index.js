@@ -132,7 +132,6 @@ const start = () => {
     });
   });
   bot.on('callback_query', async (msg) => {
-    console.log(msg);
     if (msg.data === 'xa') {
       await bot.sendSticker(
         cons.mess(msg),
@@ -217,6 +216,21 @@ const start = () => {
         parse_mode: 'HTML',
       }
     );
+  });
+
+  //================Chatphoto==============
+  bot.on('photo', async (msg) => {
+    bot.sendSticker(
+      cons.chatId(msg),
+      'https://tlgrm.ru/_/stickers/dc7/a36/dc7a3659-1457-4506-9294-0d28f529bb0a/192/13.webp'
+    );
+  });
+
+  //=================Title=================>
+
+  bot.onText(/\/title/, async (msg, match) => {
+    const tit = match.input.split(' ')[1];
+    bot.setChatTitle(cons.chatId(msg), tit);
   });
 
   //===================NewMember===========>
